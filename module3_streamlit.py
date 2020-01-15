@@ -222,13 +222,13 @@ def get_chassis_data(chassis, frame_size, engine_size, frame, armor):
 
 def accessory_data(rocket, minigun, laser_missile, grenade, targeting_comp):
   column_dict = {'none': 0, 'mk1': 1, 'mk2': 2, 'mk3': 3, 'mk4': 4, 'mk5': 5}
-  rocket_weight, rocket_damage, rocket_cost = [rocket_data[col][column_dict[rocket]] for col in len(rocket_data)]
-  minigun_weight, minigun_damage, minigun_cost = [minigun_data[col][column_dict[minigun]] for col in len(minigun_data)]
-  laser_missile_weight, laser_missile_damage, laser_missile_cost = [laser_missile_data[col][column_dict[laser_missile]] for col in len(laser_missile_data)]
-  grenade_weight, grenade_damage, grenade_cost = [grenade_data[col][column_dict[grenade]] for col in len(grenade_data)]
-  targeting_comp_weight, targeting_comp_damage, targeting_comp_cost = [targeting_comp_data[col][column_dict[targeting_comp]] for col in len(targeting_comp_data)]
+  rocket_weight, rocket_damage, rocket_cost = [rocket_data[col][column_dict[rocket]] for col in range(len(rocket_data))]
+  minigun_weight, minigun_damage, minigun_cost = [minigun_data[col][column_dict[minigun]] for col in range(len(minigun_data))]
+  laser_missile_weight, laser_missile_damage, laser_missile_cost = [laser_missile_data[col][column_dict[laser_missile]] for col in range(len(laser_missile_data))]
+  grenade_weight, grenade_damage, grenade_cost = [grenade_data[col][column_dict[grenade]] for col in range(len(grenade_data))]
+  targeting_comp_weight, targeting_comp_damage, targeting_comp_cost = [targeting_comp_data[col][column_dict[targeting_comp]] for col in range(len(targeting_comp_data))]
 
-  if targeting_comp !== 'none':
+  if targeting_comp != 'none':
     laser_missile_damage *= targeting_comp_damage
 
   weight = rocket_weight + minigun_weight + laser_missile_weight + grenade_weight + targeting_comp_weight
@@ -239,7 +239,7 @@ def accessory_data(rocket, minigun, laser_missile, grenade, targeting_comp):
   return weight, damage, cost
 
 chassis_weight, speed, surv, chassis_cost = get_chassis_data(chassis, frame_size, engine_size, frame, armor)
-acc_weight, damage, acc_cost = accessory_data(rocket, minigun, laser_missile, grenade, targeting_comp)
+acc_weight, damage, acc_cost = accessory_data(rocket, minigun, laser_guided_missile, grenade, targeting_computer)
 
 weight = chassis_weight + acc_weight
 cost = chassis_cost + acc_cost

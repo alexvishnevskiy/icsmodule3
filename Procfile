@@ -1,1 +1,1 @@
-web: sh setup.sh && streamlit run icsmodule3.py
+web: sh setup.sh && streamlit run module3_streamlit.py

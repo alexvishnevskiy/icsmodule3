@@ -149,6 +149,12 @@ armor = st.selectbox(
 	('None', 'Steel', 'Tungsten'))
 st.write('You selected ', armor.lower())
 
+chassis = chassis.lower()
+frame_size = framse_size.lower()
+engine_size = engine_size.lower()
+frame = frame.lower()
+armor = armor.lower()
+
 st.markdown('Please select the weapon configuration below.')
 st.markdown('MK1 variants provide the lowest performance, while MK5 provides the highest.')
 st.markdown('The laser-guided missile requires a targeting computer to be installed in order to obtain higher lethanlity than a free rocket')
@@ -177,6 +183,12 @@ targeting_computer = st.selectbox(
 	'Targeting computer variant',
 	('None', 'MK1', 'MK2', 'MK3', 'MK4', 'MK5'))
 st.write('You selected ', targeting_computer)
+
+rocket = rocket.lower()
+minigun = minigun.lower()
+laser_guided_missile = laser_guided_missile.lower()
+grenade = grenade.lower()
+targeting_computer = targeting_computer.lower()
 
 n_runs = int(st.text_input('Enter the number of tests to perform: ', value='1', key='runs'))
 

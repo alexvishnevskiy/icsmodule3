@@ -157,7 +157,7 @@ armor = armor.lower()
 
 st.markdown('Please select the weapon configuration below.')
 st.markdown('MK1 variants provide the lowest performance, while MK5 provides the highest.')
-st.markdown('The laser-guided missile requires a targeting computer to be installed in order to obtain higher lethanlity than a free rocket')
+st.markdown('The laser-guided missile requires a targeting computer to be installed in order to obtain higher lethanlity than a free rocket.')
 
 rocket = st.selectbox(
 	'Rocket variant',
@@ -190,7 +190,7 @@ laser_guided_missile = laser_guided_missile.lower()
 grenade = grenade.lower()
 targeting_computer = targeting_computer.lower()
 
-n_runs = int(st.text_input('Enter the number of tests to perform: ', value='1', key='runs'))
+n_runs = int(st.text_input('Enter the number of tests to perform: ', value=1, key='runs'))
 
 start = st.button('Begin Testing')
 
@@ -203,7 +203,7 @@ def get_chassis_data(chassis, frame_size, engine_size, frame, armor):
     engine_df = tracked_engine_df
     frame_df = tracked_frame_df
     armor_df = tracked_armor_df
-  elif chassis == 'hover':
+  else: #chassis == 'hover':
     engine_df = hover_engine_df
     frame_df = hover_frame_df
     armor_df = hover_armor_df

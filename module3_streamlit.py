@@ -150,7 +150,7 @@ armor = st.selectbox(
 st.write('You selected ', armor.lower())
 
 chassis = chassis.lower()
-frame_size = framse_size.lower()
+frame_size = frame_size.lower()
 engine_size = engine_size.lower()
 frame = frame.lower()
 armor = armor.lower()

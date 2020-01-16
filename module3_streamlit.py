@@ -244,7 +244,7 @@ acc_weight, damage, acc_cost = accessory_data(rocket, minigun, laser_guided_miss
 weight = chassis_weight + acc_weight
 cost = chassis_cost + acc_cost
 
-test_time = 600/100
+test_time = 600/1000
 latest_iteration = st.empty()
     my_bar = st.progress(0)
     for i in range(n_runs+1):

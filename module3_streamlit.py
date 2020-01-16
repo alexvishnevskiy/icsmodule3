@@ -5,7 +5,7 @@ import time
 
 st.title('ICS Module 3 Testing Simulator')
 st.markdown('Please choose your vehicle configuration below, and click the button to commence testing.')
-st.markdown('Each test takes 0.6 seconds to complete. 1000 tests will take 10 minutes.')
+st.markdown('Each test takes 1.67 seconds to complete. 1000 tests will take 10 minutes.')
 
 # creating the multi-level row indices per the Dragonfly Component Tradeoff Matrix
 # active power data not currently included
@@ -149,15 +149,9 @@ armor = st.selectbox(
 	('None', 'Steel', 'Tungsten'))
 st.write('You selected ', armor.lower())
 
-chassis = chassis.lower()
-frame_size = frame_size.lower()
-engine_size = engine_size.lower()
-frame = frame.lower()
-armor = armor.lower()
-
 st.markdown('Please select the weapon configuration below.')
 st.markdown('MK1 variants provide the lowest performance, while MK5 provides the highest.')
-st.markdown('The laser-guided missile requires a targeting computer to be installed in order to obtain higher lethanlity than a free rocket.')
+st.markdown('The laser-guided missile requires a targeting computer to be installed in order to obtain higher lethanlity than a free rocket')
 
 rocket = st.selectbox(
 	'Rocket variant',
@@ -184,92 +178,6 @@ targeting_computer = st.selectbox(
 	('None', 'MK1', 'MK2', 'MK3', 'MK4', 'MK5'))
 st.write('You selected ', targeting_computer)
 
-rocket = rocket.lower()
-minigun = minigun.lower()
-laser_guided_missile = laser_guided_missile.lower()
-grenade = grenade.lower()
-targeting_computer = targeting_computer.lower()
-
-n_runs = int(st.text_input('Enter the number of tests to perform: ', value=1, key='runs'))
+n_runs = int(st.text_input('Enter the number of tests to perform: ', value='1', key='runs'))
 
 start = st.button('Begin Testing')
-
-def get_chassis_data(chassis, frame_size, engine_size, frame, armor):
-  if chassis == 'wheeled':
-    engine_df = wheeled_engine_df
-    frame_df = wheeled_frame_df
-    armor_df = wheeled_armor_df
-  elif chassis == 'tracked':
-    engine_df = tracked_engine_df
-    frame_df = tracked_frame_df
-    armor_df = tracked_armor_df
-  else: #chassis == 'hover':
-    engine_df = hover_engine_df
-    frame_df = hover_frame_df
-    armor_df = hover_armor_df
-# getting data from the dataframes 
-  col1 = chassis + '_' + frame_size + '_' + 'frame'
-  col2 = [col for col in (engine_size, frame, armor)]
-  engine_weight, speed, engine_cost = engine_df[col1][col2[0]].values
-  frame_weight, frame_surv, frame_cost = frame_df[col1][col2[1]].values
-  armor_weight, armor_surv, armor_cost = armor_df[col1][col2[2]].values
-
-  surv = (frame_surv + armor_surv) / (260 + 140) # fraction of max possible value  
-  weight = engine_weight + frame_weight + armor_weight
-  cost = engine_cost + frame_cost + armor_cost
-
-  return weight, speed, surv, cost
-
-def accessory_data(rocket, minigun, laser_missile, grenade, targeting_comp):
-  column_dict = {'none': 0, 'mk1': 1, 'mk2': 2, 'mk3': 3, 'mk4': 4, 'mk5': 5}
-  rocket_weight, rocket_damage, rocket_cost = [rocket_data[col][column_dict[rocket]] for col in range(len(rocket_data))]
-  minigun_weight, minigun_damage, minigun_cost = [minigun_data[col][column_dict[minigun]] for col in range(len(minigun_data))]
-  laser_missile_weight, laser_missile_damage, laser_missile_cost = [laser_missile_data[col][column_dict[laser_missile]] for col in range(len(laser_missile_data))]
-  grenade_weight, grenade_damage, grenade_cost = [grenade_data[col][column_dict[grenade]] for col in range(len(grenade_data))]
-  targeting_comp_weight, targeting_comp_damage, targeting_comp_cost = [targeting_comp_data[col][column_dict[targeting_comp]] for col in range(len(targeting_comp_data))]
-
-  if targeting_comp != 'none':
-    laser_missile_damage *= targeting_comp_damage
-
-  weight = rocket_weight + minigun_weight + laser_missile_weight + grenade_weight + targeting_comp_weight
-  cost = rocket_cost + minigun_cost + laser_missile_cost + grenade_cost + targeting_comp_cost
-  baseline_damage = 120 + 120*1.2 # this is the maximum damage possible with two weapons
-  damage = (rocket_damage + minigun_damage + laser_missile_damage + grenade_damage) / baseline_damage
-
-  return weight, damage, cost
-
-chassis_weight, speed, surv, chassis_cost = get_chassis_data(chassis, frame_size, engine_size, frame, armor)
-acc_weight, damage, acc_cost = accessory_data(rocket, minigun, laser_guided_missile, grenade, targeting_computer)
-
-weight = chassis_weight + acc_weight
-cost = chassis_cost + acc_cost
-
-test_time = 600/100
-latest_iteration = st.empty()
-    my_bar = st.progress(0)
-    for i in range(n_runs+1):
-	    percent_cpl = int(i / n_runs * 100)
-	    latest_iteration.text('Test {}/{}'.format(i, n_runs))
-	    my_bar.progress(percent_cpl)
-	    time.sleep(test_time)
-    st.markdown('Testing results: ')
-    st.markdown(f'Weight: {weight:.2f} kgs  \nSpeed: {speed:.2f} km/hr  \nSurvivability index: {surv:.3f}\
-    	  \nDamage index: {damage:.2f} deg\nCost: {cost:.2f} ($M)')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

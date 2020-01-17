@@ -238,20 +238,21 @@ def accessory_data(rocket, minigun, laser_missile, grenade, targeting_comp):
 
   return weight, damage, cost
 
-chassis_weight, speed, surv, chassis_cost = get_chassis_data(chassis, frame_size, engine_size, frame, armor)
-acc_weight, damage, acc_cost = accessory_data(rocket, minigun, laser_guided_missile, grenade, targeting_computer)
+if start:
+    chassis_weight, speed, surv, chassis_cost = get_chassis_data(chassis, frame_size, engine_size, frame, armor)
+    acc_weight, damage, acc_cost = accessory_data(rocket, minigun, laser_guided_missile, grenade, targeting_computer)
 
-weight = chassis_weight + acc_weight
-cost = chassis_cost + acc_cost
+    weight = chassis_weight + acc_weight
+    cost = chassis_cost + acc_cost
 
-test_time = 600/1000
-latest_iteration = st.empty()
+    test_time = 600/1000
+    latest_iteration = st.empty()
     my_bar = st.progress(0)
     for i in range(n_runs+1):
-	    percent_cpl = int(i / n_runs * 100)
-	    latest_iteration.text('Test {}/{}'.format(i, n_runs))
-	    my_bar.progress(percent_cpl)
-	    time.sleep(test_time)
+        percent_cpl = int(i / n_runs * 100)
+        latest_iteration.text('Test {}/{}'.format(i, n_runs))
+        my_bar.progress(percent_cpl)
+        time.sleep(test_time)
     st.markdown('Testing results: ')
     st.markdown(f'Weight: {weight:.2f} kgs  \nSpeed: {speed:.2f} km/hr  \nSurvivability index: {surv:.3f}\
     	  \nDamage index: {damage:.2f} deg\nCost: {cost:.2f} ($M)')
